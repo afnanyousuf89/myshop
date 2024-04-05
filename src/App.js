@@ -1,24 +1,36 @@
-import logo from './logo.svg';
-import './App.css';
+import { useEffect, useState } from "react";
+import Hero from "./components/Hero";
+import Navbar from "./components/Navbar";
+import ProductForm from "./components/ProductForm";
+import Productarea from "./components/Productarea";
+import Searchmodel from "./components/Searchmodel";
+
 
 function App() {
+
+  const [category, setCategory] = useState([]);
+
+    useEffect(()=>{
+        fetch("http://localhost:8081/category")
+        .then((response)=>response.json())
+        .then((data)=>{
+            console.log(data)
+            setCategory(data)
+        })
+        .catch((err)=>{
+            console.log(err)
+            }
+        )
+    },[])
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+    <ProductForm category={category}/>
+     {/* <Navbar/>
+     <Searchmodel/>
+     <Hero/>
+     <Productarea category={category}/> */}
+    </>
   );
 }
 
